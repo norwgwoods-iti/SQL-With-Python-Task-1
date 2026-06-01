@@ -13,7 +13,7 @@ while running:
             running = False
         elif select_function == 2:
             aut = Authorization()
-            print(aut.authorization())
+            aut.authorization()
             running = False
         elif select_function == 3:
             rp = ResetPassword()
