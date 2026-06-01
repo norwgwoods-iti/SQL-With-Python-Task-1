@@ -1,45 +1,44 @@
+from getpass import getpass
+
 from base.base_class import Base
 
 
 class Authorization(Base):
-    def __init__(self):
-        super().__init__()
-        self.login = None
 
-    # def input_login(self):
-    #     login = input('Введите Логин: ').lower()
-    #
-    # """Ввод логина"""
-    #
-    # def input_login(self):
-    #     while True:
-    #         login = input('Введите Логин: ').lower()
-    #         if login == self.check_login(login):
-    #             print('Логин введен верно')
-    #             return login
-    #         else:
-    #             print('Такого логина не существует')
-    #             continue
+    """Запрашиваем Логин у пользователя"""
+    @staticmethod
+    def input_login():
+        login = input('Введите Логин:\n').lower()
+        return login
 
-
-    """Функция"""
-    def input_password(self, login):
-        self.login = login
-        print(f'Логин введен верно: {login}')
-        password = input('Введите Пароль: ')
-        if password == self.check_password(login):
-            print('Пароль верный')
-        else:
-            print('Пароль не совпадает')
-
-
+    """Запрашиваем Пароль у пользователя"""
+    @staticmethod
+    def input_password():
+        print('Введите Пароль')
+        password = getpass()
+        return password
 
     # Methods
-
+    """Метод авторизации"""
     def authorization(self):
-        self.connection_db()
-        self.get_cursor_db()
-        self.input_password(self.input_login())
-        self.close_db()
-        print('Авторизация прошла успешно')
+        while True:
+            """Логин и пароль записываем в переменные"""
+            login = self.input_login()
+            password = self.input_password()
+
+            """Подключаемся к БД"""
+            self.connection_db()
+            self.get_cursor_db()
+            """Достаем данные из БД"""
+            user_data = self.get_user_data(login)
+            """Закрываем БД"""
+            self.close_db()
+
+            """Сверяем данные с БД"""
+            # Если user_data пустая - значит логина нет в БД, user_data[0] содержит пароль из base_class
+            if user_data and user_data[0] == password:
+                return 'Авторизация прошла успешно'
+            else:
+                print('Логин или пароль ввведены неверно')
+
 
