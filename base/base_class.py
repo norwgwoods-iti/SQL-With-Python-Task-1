@@ -37,7 +37,7 @@ class Base:
             print('Сначала необходимо подключиться к БД с помощью connection_db()')
             return None
 
-
+    """Получаем Пароль и Код по Логину"""
     def get_user_data(self, login):
         self.cur.execute(
             """
