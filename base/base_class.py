@@ -16,7 +16,6 @@ class Base:
         # print(f'Подключились к Базе Данных - {self.sql_path.name}')
         return self.db
 
-
     """Возвращаем курсор"""
     def get_cursor_db(self):
         try:
@@ -25,7 +24,6 @@ class Base:
         except AttributeError:
             print('Сначала необходимо подключиться к БД с помощью connection_db()')
             return None
-
 
     """Получаем все поля таблицы"""
     def get_fields(self):
@@ -48,7 +46,6 @@ class Base:
         )
 
         return self.cur.fetchone()
-
 
     """Закрываем БД"""
     def close_db(self):
