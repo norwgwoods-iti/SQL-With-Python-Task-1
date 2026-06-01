@@ -1,7 +1,7 @@
 import sqlite3 as sql
 from pathlib import Path
 
-path_sql = Path(__file__).resolve().parent / 'registration.db'
+path_sql = Path(__file__).resolve().parent.parent / 'registration.db'
 
 db = sql.connect(path_sql)
 
