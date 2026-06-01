@@ -3,9 +3,7 @@ import random
 
 from base.base_class import Base
 
-
 class Registration(Base):
-
 
     """Ввод логина по заданным правилам"""
     @staticmethod
@@ -44,8 +42,7 @@ class Registration(Base):
                 print('Выбранный логин свободен!')
                 return login_new
 
-
-    """Ввод пароля по заданным  правилам"""
+    """Ввод пароля по заданным правилам"""
     @staticmethod
     def check_and_add_input_password():
 
@@ -61,8 +58,8 @@ class Registration(Base):
                 print('Ошибка! Пароль слишком длинный. Максимальная длина - 20 символов.')
                 continue
             elif not re.match(r'^[a-zA-Z0-9_!@#$%^&*]{7,20}$', password_new):
-                print(
-                    'Ошибка! Пароль содержит недопустимые символы. Используйте буквы латинского алфавита, цифры или "_!@#$%^&*" символы.')
+                print('Ошибка! Пароль содержит недопустимые символы. Используйте буквы латинского алфавита, цифры или "_!@#$%^&*" символы.')
+                continue
 
             print('Подтвердите введеный пароль:')
 
@@ -74,13 +71,12 @@ class Registration(Base):
             else:
                 print('Пароли не совпадают! Попробуйте заново ввести пароль...')
 
-
-    """Ввод кода по заданным доступа"""
+    """Ввод кода доступа по заданным правилам"""
     @staticmethod
     def check_and_add_input_code():
-        print('Введите проверочный код для сброса пароля (от 4 до 6 цифр):')
 
         while True:
+            print('Введите проверочный код для сброса пароля (от 4 до 6 цифр):')
 
             code_new = input()
 
@@ -92,12 +88,9 @@ class Registration(Base):
                 continue
             elif not re.match(r'^[0-9]{4,6}$', code_new):
                 print('Ошибка! Код содержит недопустимые символы. Используйте цифры от 0 до 9.')
-            else:
-                break
+                continue
 
-        print('Подтвердите проверочный код:')
-
-        while True:
+            print('Подтвердите проверочный код:')
 
             code_2 = input()
 
@@ -106,7 +99,6 @@ class Registration(Base):
                 return code_new
             else:
                 print('Введеные коды различаются! Попробуйте еще раз...')
-
 
     """Ввод пароля, логина и кода в БД"""
     def add_account_in_bd(self, login, password, code):
@@ -135,7 +127,9 @@ class Registration(Base):
         """Подключаемся к БД и вводим данные логина, пароля и кода в БД"""
         self.connection_db()
         self.get_cursor_db()
+        """Записываем Логин, Пароль и Код в БД"""
         self.add_account_in_bd(login, password, code)
+        """Закрываем БД"""
         self.close_db()
 
         print('--- Регистрация прошла успешно ---')
